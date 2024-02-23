@@ -9,6 +9,7 @@ services:
       context: ./docker/python/
     expose:
       - 80
+    network_mode: host
     command:  uvicorn app:app --reload --host 0.0.0.0 --port 80
 
   nginx:
