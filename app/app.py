@@ -12,7 +12,7 @@ import redis
 load_dotenv()
 REDIS_HOST = os.environ.get("REDIS_HOST")
 REDIS_PORT = os.environ.get("REDIS_PORT")
-ORIGIN_URL = os.environ.get("ORIGIN_URL")
+ORIGIN = os.environ.get("ORIGIN")
 
 app = FastAPI()
 templates = Jinja2Templates(directory="docs")
@@ -20,7 +20,7 @@ red = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[ORIGIN_URL],
+    allow_origins=[ORIGIN],
 )
 
 class Cart(BaseModel):
