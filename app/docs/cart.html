@@ -33,7 +33,7 @@
 
             let jsonData = JSON.stringify(formData);
 
-            fetch('http://localhost/api/cart', {
+            fetch(`http://${location.hostname}/api/cart`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
