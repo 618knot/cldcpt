@@ -1,5 +1,6 @@
 from typing import Optional
 from fastapi import FastAPI, HTTPException
+from starlette.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
@@ -11,10 +12,16 @@ import redis
 load_dotenv()
 REDIS_HOST = os.environ.get("REDIS_HOST")
 REDIS_PORT = os.environ.get("REDIS_PORT")
+ORIGIN_URL = os.environ.get("ORIGIN_URL")
 
 app = FastAPI()
 templates = Jinja2Templates(directory="docs")
 red = redis.Redis(host=REDIS_HOST, port=REDIS_PORT, decode_responses=True)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[ORIGIN_URL],
+)
 
 class Cart(BaseModel):
     item01: Optional[int]
