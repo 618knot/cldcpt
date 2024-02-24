@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>b2211790</title>
+</head>
+<body>
+    <h3>ログイン</h3>
+    <h4><font color="red">emailは念のため@example.comで</font></h4>
+    <h4><font color="red">HTTP通信なのでまじめなパスワードは送信しないように</font></h4>
+    <form id="cartForm">
+        <div>
+            <label for="email">email</label>
+            <input type="text" name="email" id="email" required>
+        </div>
+        <div>
+            <label for="password">password</label>
+            <input type="text" name="password" id="password" required>
+        </div>
+        <input type="button" value="ログイン" onclick="submitForm()">
+    </form>
+    <script>
+        function submitForm() {
+            let formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value
+            };
+
+            let jsonData = JSON.stringify(formData);
+
+            fetch(`http://${location.hostname}/api/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            }).then(() => location.href = "/mycart")
+        }
+    </script>
+</body>
+</html>

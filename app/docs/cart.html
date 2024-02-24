@@ -23,6 +23,9 @@
         <input type="button" value="一時保存" onclick="submitCart()">
     </form>
     <div id="result"></div>
+    <div id="cartSearch">
+        <button onclick="getCart()">カートの中身を見る</button>
+    </div>
     <script>
         function submitCart() {
             let formData = {
@@ -42,6 +45,16 @@
             }).then(response => response.text())
             .then(html => {
                 let element = document.getElementById("result");
+                element.innerHTML = html;
+            })
+        }
+
+        function getCart() {
+            fetch(`http://${location.hostname}/api/cart`, {
+                method: 'GET',
+            }).then(response => response.text())
+            .then(text => {
+                let element = document.getElementById("cartSearch");
                 element.innerHTML = html;
             })
         }
