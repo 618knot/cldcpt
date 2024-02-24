@@ -81,9 +81,11 @@ async def cart(cart: Cart, request: Request):
 @app.get("/api/cart")
 async def get_cart(request: Request):
     _session = request.cookies.get("_session")
-    if _session:
-        return red.hmget(_session)
-    return "なし"
+    try:
+        if _session:
+            return red.hgetall(_session)
+    except:
+        return "なし"
 
 @app.get("/register", response_class=HTMLResponse)
 async def register(request: Request):
