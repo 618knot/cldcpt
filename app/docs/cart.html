@@ -26,10 +26,10 @@
     <div id="cartSearch">
         <form id="cart">
             <div>
-                <label for="cookie">cookieの値</label>
-                <input type="text" name="cookie" id="cookie">
+                <label for="cookieValue">cookieの値</label>
+                <input type="text" name="cookieValue" id="cookieValue">
             </div>
-            <button onclick="getCart()">カートの中身を見る</button>
+            <input type="button" value="カートの中身を見る" onclick="getCart()">
         </form>
     </div>
     <script>
@@ -57,8 +57,7 @@
 
         function getCart() {
             let formData = {
-                _session: document.getElementById('cookie').value,
-                
+                cookieValue: document.getElementById('cookieValue').value,
             };
 
             let jsonData = JSON.stringify(formData);

@@ -85,11 +85,11 @@ async def cart(cart: Cart, request: Request):
     return response
 
 class CookieV(BaseModel):
-    _session: str
+    cookieValue: str
 
 @app.post("/api/cart")
-async def get_cart(_session: CookieV, request: Request):
-    return red.hgetall(_session._session)
+async def get_cart(cookie_value: CookieV, request: Request):
+    return red.hgetall(cookie_value.cookieValue)
 
 @app.get("/api/mycart")
 async def get_cart(request: Request):
