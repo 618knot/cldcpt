@@ -101,7 +101,8 @@ async def get_cart(request: Request):
             return red.hgetall(user.email)
         elif _session:
             return red.hgetall(_session)
-    finally:
+        return "なし"
+    except:
         return "なし"
 
 @app.get("/register", response_class=HTMLResponse)
