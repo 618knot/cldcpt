@@ -24,8 +24,8 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(Integer, autoincrement=True, primary_key=True)
-    email = Column(String, nullable=False, unique=True)
-    password = Column(String, nullable=False)
+    email = Column(String(255), nullable=False, unique=True)
+    password = Column(String(255), nullable=False)
     session = Column(String)
 
 Base.metadata.create_all(bind=engine)
