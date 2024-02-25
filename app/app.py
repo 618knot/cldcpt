@@ -84,7 +84,7 @@ async def cart(cart: Cart, request: Request):
 
     return response
 
-class CookieV:
+class CookieV(BaseModel):
     _session: str
 
 @app.post("/api/cart")
