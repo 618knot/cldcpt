@@ -11,7 +11,7 @@ import os
 import redis
 import hashlib
 
-from models.sqlite.util import session
+from models.db.util import session
 from models.user import User
 
 load_dotenv()
