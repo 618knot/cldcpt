@@ -73,18 +73,35 @@ async def cart(cart: Cart, request: Request):
         cookie = str(time.time())
         response.set_cookie(key="_session", value=cookie, expires=600)
 
-    # redisにカートを保存
-    red.hmset(cookie, cart_dict)
+    if is_sign_in(cookie):
+        user = session.query(User).filter(cookie == User.session).first()
+
+        # redisにカートを保存
+        red.hmset(user.email, cart_dict)
+    else:
+        # redisにカートを保存
+        red.hmset(cookie, cart_dict)
 
     return response
 
-@app.get("/api/cart")
+class CookieV:
+    _session: str
+
+@app.post("/api/cart")
+async def get_cart(_session: CookieV, request: Request):
+    return red.hgetall(_session._session)
+
+@app.get("/api/mycart")
 async def get_cart(request: Request):
     _session = request.cookies.get("_session")
     try:
-        if _session:
-            return red.hgetall(_session)
-    except:
+        if is_sign_in(_session):
+            user = session.query(User).filter(_session == User.session).first()
+
+            red.hgetall(user.email)
+        elif _session:
+            red.hgetall(_session)
+    finally:
         return "なし"
 
 @app.get("/register", response_class=HTMLResponse)
@@ -142,7 +159,7 @@ async def mycart(request: Request):
 
     if not is_sign_in(_session):
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse("cart.html", {"request": request})
+    return templates.TemplateResponse("mycart.html", {"request": request})
 
 def is_sign_in(_session: str) -> bool:
     return session and session.query(User).filter(_session == User.session).count()

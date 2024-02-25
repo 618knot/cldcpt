@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>b2211790</title>
+</head>
+<body>
+    <h3>ショッピングカート</h3>
+    <form id="cartForm">
+        <div>
+            <label for="item01">item01</label>
+            <input type="text" name="item01" id="item01">
+        </div>
+        <div>
+            <label for="item02">item02</label>
+            <input type="text" name="item02" id="item02">
+        </div>
+        <div>
+            <label for="item03">item03</label>
+            <input type="text" name="item03" id="item03">
+        </div>
+        <input type="button" value="一時保存" onclick="submitCart()">
+    </form>
+    <div id="result"></div>
+    <div id="cartSearch">
+        <form id="cart">
+            <div>
+                <label for="cookie">cookieの値</label>
+                <input type="text" name="cookie" id="cookie">
+            </div>
+            <button onclick="getCart()">カートの中身を見る</button>
+        </form>
+    </div>
+    <script>
+        function submitCart() {
+            let formData = {
+                item01: document.getElementById('item01').value || 0,
+                item02: document.getElementById('item02').value || 0,
+                item03: document.getElementById('item03').value || 0
+            };
+
+            let jsonData = JSON.stringify(formData);
+
+            fetch(`http://${location.hostname}/api/cart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            }).then(response => response.text())
+            .then(html => {
+                let element = document.getElementById("result");
+                element.innerHTML = html;
+            })
+        }
+
+        function getCart() {
+            let formData = {
+                item01: document.getElementById('cookie').value,
+                
+            };
+
+            let jsonData = JSON.stringify(formData);
+
+            fetch(`http://${location.hostname}/api/mycart`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: jsonData
+            }).then(response => response.text())
+            .then(text => {
+                let element = document.getElementById("cartSearch");
+                element.innerHTML = text;
+            })
+        }
+    </script>
+</body>
+</html>
