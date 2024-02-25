@@ -26,6 +26,6 @@ class User(Base):
     id = Column(Integer, autoincrement=True, primary_key=True)
     email = Column(String(255), nullable=False, unique=True)
     password = Column(String(255), nullable=False)
-    session = Column(String)
+    session = Column(String(255))
 
 Base.metadata.create_all(bind=engine)
