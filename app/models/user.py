@@ -15,8 +15,8 @@ DB_NAME = os.environ.get("DB_NAME")
 DB_HOST = os.environ.get("DB_HOST")
 print(DB_NAME)
 
-engine = create_engine(f"sqlite:///{DB_NAME}", echo=True)
-# engine = create_engine(f"mysql+pymysql://{USER_NAME}:{PASSWORD}@{DB_HOST}:3306/{DB_NAME}?utf8mb4", echo=False)
+# engine = create_engine(f"sqlite:///{DB_NAME}", echo=True)
+engine = create_engine(f"mysql+pymysql://{USER_NAME}:{PASSWORD}@{DB_HOST}:3306/{DB_NAME}?utf8mb4", echo=False)
 
 Base = declarative_base()
 
