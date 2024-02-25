@@ -98,9 +98,9 @@ async def get_cart(request: Request):
         if is_sign_in(_session):
             user = session.query(User).filter(_session == User.session).first()
 
-            red.hgetall(user.email)
+            return red.hgetall(user.email)
         elif _session:
-            red.hgetall(_session)
+            return red.hgetall(_session)
     finally:
         return "なし"
 
