@@ -33,7 +33,7 @@ app.add_middleware(
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("mycart.html", {"request": request})
+    return templates.TemplateResponse("cart.html", {"request": request})
 
 
 class Cart(BaseModel):

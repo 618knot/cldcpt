@@ -25,11 +25,16 @@
     <div id="result"></div>
     <div id="cartSearch">
         <form id="cart">
-            <div>
-                <label for="cookieValue">cookieの値</label>
-                <input type="text" name="cookieValue" id="cookieValue">
-            </div>
             <input type="button" value="カートの中身を見る" onclick="getCart()">
+        </form>
+    </div>
+    <div id="cartSearch2">
+        <form id="cart2">
+            <div>
+                <label for="cookieValue2">cookieの値</label>
+                <input type="text" name="cookieValue2" id="cookieValue2">
+            </div>
+            <input type="button" value="カートの中身を見る" onclick="getCart2()">
         </form>
     </div>
     <script>
@@ -56,8 +61,18 @@
         }
 
         function getCart() {
+            fetch(`http://${location.hostname}/api/mycart/search`, {
+                method: 'GET',
+            }).then(response => response.text())
+            .then(text => {
+                let element = document.getElementById("cartSearch");
+                element.innerHTML = text;
+            })
+        }
+
+        function getCart2() {
             let formData = {
-                cookieValue: document.getElementById('cookieValue').value,
+                cookieValue: document.getElementById('cookieValue2').value,
             };
 
             let jsonData = JSON.stringify(formData);
@@ -70,7 +85,7 @@
                 body: jsonData
             }).then(response => response.text())
             .then(text => {
-                let element = document.getElementById("cartSearch");
+                let element = document.getElementById("cartSearch2");
                 element.innerHTML = text;
             })
         }
